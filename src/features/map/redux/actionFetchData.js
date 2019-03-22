@@ -14,21 +14,21 @@ export function actionFetchData(args = {}) {
     });
     const promise = new Promise((resolve, reject) => {
 
-      // const doRequest = fetch("https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js");
-      const doRequest = Promise.resolve([
-      {
-        latitude: 1.385361,
-        longitude: 103.9014,
-        message: "Heavy Traffic on TPE",
-        type: "Heavy Traffic"
-      },
-      {
-        latitude: 1.305361,
-        longitude: 103.9014,
-        message: "Heavy Traffic on TPE",
-        type: "Heavy Traffic"
-      },
-    ]);
+      const doRequest = fetch("http://localhost:5000/incidences").then((r) => r.json());
+    //   const doRequest = Promise.resolve([
+    //   {
+    //     latitude: 1.385361,
+    //     longitude: 103.9014,
+    //     message: "Heavy Traffic on TPE",
+    //     type: "Heavy Traffic"
+    //   },
+    //   {
+    //     latitude: 1.305361,
+    //     longitude: 103.9014,
+    //     message: "Heavy Traffic on TPE",
+    //     type: "Heavy Traffic"
+    //   },
+    // ]);
       doRequest.then(
         (res) => {
           dispatch({

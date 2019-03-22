@@ -14,22 +14,39 @@ export class CrisisMap extends Component {
   };
 
   componentWillMount() {
+    this.dataFetchInterval = setInterval(
+      () => {
+        this.props.actions.actionFetchData()
+      }
+    , 10000)
     this.props.actions.actionFetchData()
   }
 
+  componentWillUnmount() {
+    this.props.actions.actionFetchData()
+    clearInterval(this.dataFetchInterval)
+  }
+
   renderCrisis() {
-    console.log(this.props.map.data)
     return this.props.map.data.map(
-      (datum, index) => <Crisis key={index}{...datum}/>
+      (datum, index) => <Crisis key={index} {...datum}/>
     )
   }
 
   render() {
-    return (
-      <Map>
-        { this.renderCrisis() }
-      </Map>
-    );
+    return this.props.map.data.length
+      ? (
+        <div className="map-crisis-map">
+          <Map>
+            { this.renderCrisis() }
+          </Map>
+        </div>
+      )
+      : (
+        <div className="map-crisis-map">
+          <p>Loading</p>
+        </div>
+      )
   }
 }
 

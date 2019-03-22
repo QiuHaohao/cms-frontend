@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
 import { CrisisMap } from '../map'
+import { PageHeader } from '../common'
+
+import { Layout } from 'antd';
+const { Header, Content } = Layout;
 
 export class DefaultPage extends Component {
   static propTypes = {
@@ -15,7 +19,14 @@ export class DefaultPage extends Component {
   render() {
     return (
       <div className="home-default-page">
-        <CrisisMap />
+        <Layout>
+          <Header style={{ position: 'fixed', zIndex: 1, width: '100%', background: "#fff", padding: '0 10px' }}>
+            <PageHeader />
+          </Header>
+          <Content style={{ marginTop: 64, width: '100%' }}>
+            <CrisisMap />
+          </Content>
+        </Layout>
       </div>
     );
   }

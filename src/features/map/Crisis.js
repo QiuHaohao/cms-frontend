@@ -9,7 +9,11 @@ import {
   withStateHandlers
 } from 'recompose';
 
+import InfoBoxContent from './InfoBoxContent'
+import { Icon } from 'antd';
+
 const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
+
 
 const Crisis = compose(
     withStateHandlers(() => ({
@@ -19,12 +23,14 @@ const Crisis = compose(
       isOpen: !isOpen,
     })
   }),
-  )(props => (
+  )(props => {
+    return(
     <Marker
       position={{
-        lat: props.latitude,
-        lng: props.longitude
+        lat: props.Latitude,
+        lng: props.Longitude
         }}
+      label={props.Type.slice(0,1)}
       onClick={props.onToggleOpen}
       >
       {
@@ -32,15 +38,12 @@ const Crisis = compose(
         <InfoBox
           onCloseClick={props.onToggleOpen}
           options={{ closeBoxURL: ``, enableEventPropagation: true }}>
-          <div style={{ backgroundColor: `yellow`, opacity: 0.75, padding: `12px` }}>
-            <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
-              {props.type}
-              {props.message}
+            <div className="infobox">
+              <InfoBoxContent message={props.Message} type={props.Type} />
             </div>
-          </div>
         </InfoBox>
       }
     </Marker>
-  ));
+  )});
 
 export default Crisis;
