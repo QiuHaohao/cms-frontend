@@ -25,8 +25,8 @@ class PageHeader extends Component {
           mode="horizontal"
           style={{ lineHeight: '64px' }}
         >
-          <Menu.Item key="1" onClick={this.getOnClickForTab('/crisis-map')}>Crisis Map</Menu.Item>
-          <Menu.Item key="2" onClick={this.getOnClickForTab('/report-crisis')}>Report Crisis</Menu.Item>
+          <Menu.Item key="1" onClick={this.getOnClickForTab('/crisis-map')}>Incidents Monitor</Menu.Item>
+          <Menu.Item key="2" onClick={this.getOnClickForTab('/report-crisis')}>Report Incident</Menu.Item>
         </Menu>
       </React.Fragment>
     );
