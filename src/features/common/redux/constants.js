@@ -1,0 +1,2 @@
+export const PAGE_CRISIS_MAP = "PAGE_CRISIS_MAP";
+export const PAGE_CRISIS_REPORT = "PAGE_CRISIS_REPORT";

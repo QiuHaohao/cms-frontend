@@ -5,11 +5,7 @@
 // a quick view about what data is used for the feature, at any time.
 
 // NOTE: initialState constant is necessary so that Rekit could auto add initial state when creating async actions.
-
-import { PAGE_CRISIS_MAP } from './constants'
-
 const initialState = {
-  currentPage: PAGE_CRISIS_MAP
 };
 
 export default initialState;

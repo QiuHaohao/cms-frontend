@@ -1,15 +1,36 @@
 import React, { Component } from 'react';
 
-export default class PageHeader extends Component {
+import { Menu } from 'antd';
+
+import {
+  withRouter
+} from 'react-router-dom'
+
+class PageHeader extends Component {
   static propTypes = {
 
   };
 
+  getOnClickForTab(path) {
+    return () => {
+      this.props.history.push(path)
+    }
+  }
+
   render() {
     return (
-      <div className="common-page-header">
-        Crisis Management System
-      </div>
+      <React.Fragment>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          style={{ lineHeight: '64px' }}
+        >
+          <Menu.Item key="1" onClick={this.getOnClickForTab('/crisis-map')}>Crisis Map</Menu.Item>
+          <Menu.Item key="2" onClick={this.getOnClickForTab('/report-crisis')}>Report Crisis</Menu.Item>
+        </Menu>
+      </React.Fragment>
     );
   }
 }
+
+export default withRouter(PageHeader)

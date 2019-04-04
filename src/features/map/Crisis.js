@@ -10,7 +10,6 @@ import {
 } from 'recompose';
 
 import InfoBoxContent from './InfoBoxContent'
-import { Icon } from 'antd';
 
 const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
 

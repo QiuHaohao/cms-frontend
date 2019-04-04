@@ -4,8 +4,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
-import { CrisisMap } from '../map'
+import { PageCrisisMap } from '../map'
+import { PageReportCrisis } from '../report'
 import { PageHeader } from '../common'
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { Layout } from 'antd';
 const { Header, Content } = Layout;
@@ -16,18 +19,30 @@ export class DefaultPage extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  get content() {
+    return (
+      <React.Fragment>
+        <Route exact path="/" component={PageCrisisMap} />
+        <Route exact path="/crisis-map" component={PageCrisisMap} />
+        <Route exact path="/report-crisis" component={PageReportCrisis} />
+      </React.Fragment>
+    )
+  }
+
   render() {
     return (
-      <div className="home-default-page">
-        <Layout>
-          <Header style={{ position: 'fixed', zIndex: 1, width: '100%', background: "#fff", padding: '0 10px' }}>
-            <PageHeader />
-          </Header>
-          <Content style={{ marginTop: 64, width: '100%' }}>
-            <CrisisMap />
-          </Content>
-        </Layout>
-      </div>
+      <Router>
+        <div className="home-default-page">
+          <Layout>
+            <Header>
+              <PageHeader />
+            </Header>
+            <Content style={{backgroundColor: "white"}} >
+              { this.content }
+            </Content>
+          </Layout>
+        </div>
+      </Router>
     );
   }
 }
