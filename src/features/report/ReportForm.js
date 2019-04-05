@@ -10,6 +10,8 @@ import {
 
 import { postalCodeToCoordinates } from '../../utils'
 
+import ReportConfirmModal from './ReportConfirmModal'
+
 const _ = require('lodash')
 
 const { TextArea } = Input;
@@ -27,13 +29,40 @@ export class ReportForm extends Component {
   };
 
   state = {
-    
+    modalVisible: false,
+    formData: null,
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.report.actionPostReportFormDataPending
+    && !this.isActionPostReportFormDataPending) {
+      this.hideModal()
+      if (!this.isActionPostReportFormDataError) {
+        this.props.form.resetFields()
+      }
+    }
+  }
+
+  get isActionPostReportFormDataPending() {
+    return this.props.report.actionPostReportFormDataPending;
+  }
+
+  get isActionPostReportFormDataError() {
+    return Boolean(this.props.report.actionPostReportFormDataError);
+  }
+
+  hideModal() {
+    this.setState({ ...this.state, modalVisible: false })
   }
 
   setLocation(location) {
     this.setState({
       ...this.state,
-      location
+      location: location 
+        ? {
+          Latitude: location.lat,
+          Longitude: location.lng}
+        : undefined,
     })
   }
 
@@ -70,20 +99,24 @@ export class ReportForm extends Component {
           }
         })
     }
-    else if (!value) {
-      callback();    // Empty callback, only "Please input the postal code for the location of the incident!" will show
+    else if (value) {
+      callback('Please input a valid postal code!');
     }
     else {
-      callback('Please input a valid postal code!');
+      callback()
     }
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log('Error: ', values)
       if (!err) {
-        console.log('Received values of form: ', values);
+        const formData = { ...values, ...this.state.location }
+        console.log('Received values of form: ', formData);
+        this.setState({ ...this.state, modalVisible: true, formData })
+      }
+      else {
+        console.log('Error: ', values)
       }
     });
   }
@@ -128,12 +161,18 @@ export class ReportForm extends Component {
 
     return (
       <div className="report-report-form">
+        <ReportConfirmModal
+          formData={this.state.formData}
+          visible={this.state.modalVisible}
+          confirmLoading={this.isActionPostReportFormDataPending}
+          handleOk={() =>{ this.props.actions.actionPostReportFormData(this.state.formData)}}
+          handleCancel={() => this.hideModal()}/>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
           <Form.Item
             key="Name"
             label="Name"
           >
-            {getFieldDecorator('name', {
+            {getFieldDecorator('Name', {
               rules: [{
                 required: true, message: 'Please input the name of the reporter!',
               }, {
@@ -152,7 +191,7 @@ export class ReportForm extends Component {
               )
             }
           >
-            {getFieldDecorator('mobile', {
+            {getFieldDecorator('Mobile', {
               rules: [{
                 required: true, message: 'Please input the mobile number of the reporter!',
               }, {
@@ -171,9 +210,9 @@ export class ReportForm extends Component {
               )
             }
             extra={this.state.location 
-              && `Lat: ${this.state.location.lat}   Lng: ${this.state.location.lng}`}
+              && `Lat: ${this.state.location.Latitude}   Lng: ${this.state.location.Longitude}`}
           >
-            {getFieldDecorator('postalCode', {
+            {getFieldDecorator('PostalCode', {
               rules: [{
                 required: true, message: 'Please input the postal code for the location of the incident!',
               }, {
@@ -187,7 +226,7 @@ export class ReportForm extends Component {
             key="Incident type"
             label="Incident Type"
           >
-            {getFieldDecorator('incidentType', {
+            {getFieldDecorator('Type', {
               rules: [{
                 required: true, message: 'Please input the incident type!',
               }],
@@ -206,7 +245,7 @@ export class ReportForm extends Component {
             key="Description"
             label="Description"
           >
-            {getFieldDecorator('description', {
+            {getFieldDecorator('Message', {
               rules: [{
                 required: true, message: 'Please input the incident description!',
               }],

@@ -18,7 +18,6 @@ export default class CrisisStatistics extends Component {
     return _.reduce(
       this.props.data,
       (result, item) => {
-        console.log(result)
         if (result[item.Type]) {
           return {...result, [item.Type]: result[item.Type] + 1};
         }

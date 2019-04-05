@@ -34,10 +34,10 @@ export class DefaultPage extends Component {
       <Router>
         <div className="home-default-page">
           <Layout>
-            <Header>
+            <Header style={{position:'fixed', zIndex:999, width: "100%"}}>
               <PageHeader />
             </Header>
-            <Content style={{backgroundColor: "white"}} >
+            <Content style={{backgroundColor: "white", marginTop: 64 }} >
               { this.content }
             </Content>
           </Layout>
