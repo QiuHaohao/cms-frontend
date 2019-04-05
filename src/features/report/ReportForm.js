@@ -66,9 +66,12 @@ export class ReportForm extends Component {
             callback();
           }
           else {
-            callback("Address not found")
+            callback("Address not found!")
           }
         })
+    }
+    else if (!value) {
+      callback();    // Empty callback, only "Please input the postal code for the location of the incident!" will show
     }
     else {
       callback('Please input a valid postal code!');
@@ -132,7 +135,7 @@ export class ReportForm extends Component {
           >
             {getFieldDecorator('name', {
               rules: [{
-                required: true, message: 'Please input name of the reporter!',
+                required: true, message: 'Please input the name of the reporter!',
               }, {
                 validator: this.validateName
               }],
@@ -144,14 +147,14 @@ export class ReportForm extends Component {
             key="Mobile number"
             label={
               this.getLabelWithTooltip(
-                "Mobile number", 
-                "Singapore mobile numbers start with 6, 8 or 9, and are 8 digits long (e.g. 87654321)."
+                "Mobile Number", 
+                "Singapore mobile numbers start with 6, 8, or 9, and are 8 digits long (e.g. 87654321)."
               )
             }
           >
             {getFieldDecorator('mobile', {
               rules: [{
-                required: true, message: 'Please input mobile number of the reporter!',
+                required: true, message: 'Please input the mobile number of the reporter!',
               }, {
                 validator: this.validateMobileNumber,
               }],
@@ -164,7 +167,7 @@ export class ReportForm extends Component {
             label={
               this.getLabelWithTooltip(
                 "Postal Code", 
-                "Singapore postal codes are 6 digits (e.g. 639928)."
+                "Singapore postal codes are 6 digits long (e.g. 639928)."
               )
             }
             extra={this.state.location 
@@ -172,7 +175,7 @@ export class ReportForm extends Component {
           >
             {getFieldDecorator('postalCode', {
               rules: [{
-                required: true, message: 'Please enter the postal code for the localtion of the incident!',
+                required: true, message: 'Please input the postal code for the location of the incident!',
               }, {
                 validator: this.validatePostalCode,
               }],
@@ -182,7 +185,7 @@ export class ReportForm extends Component {
           </Form.Item>
           <Form.Item
             key="Incident type"
-            label="Incident type"
+            label="Incident Type"
           >
             {getFieldDecorator('incidentType', {
               rules: [{
