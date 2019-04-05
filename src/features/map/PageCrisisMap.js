@@ -36,7 +36,7 @@ export class PageCrisisMap extends Component {
     return (
       <div className="map-page-crisis-map">
         <CrisisStatistics data={this.data}/>
-        <CrisisMap data={this.data}/>
+        <CrisisMap data={this.data} size={{ height: "600px" }}/>
         <CrisisList data={this.data}/>
       </div>
     );

@@ -5,6 +5,8 @@ import {
   MAP_ACTION_FETCH_DATA_DISMISS_ERROR,
 } from './constants';
 
+import { getFullUrl } from '../../../utils'
+
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function actionFetchData(args = {}) {
@@ -13,8 +15,8 @@ export function actionFetchData(args = {}) {
       type: MAP_ACTION_FETCH_DATA_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-
-      const doRequest = fetch("http://localhost:5000/incidences").then((r) => r.json());
+      const url = getFullUrl("/incidences")
+      const doRequest = fetch(url).then((r) => r.json());
     //   const doRequest = Promise.resolve([
     //   {
     //     latitude: 1.385361,

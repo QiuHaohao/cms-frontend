@@ -1,3 +1,5 @@
+import { URL_SERVER } from './constants'
+
 const _ = require('lodash')
 
 export function postalCodeToCoordinates(postalCode) {
@@ -29,4 +31,8 @@ function isPostalCode({ types }) {
 
 function isSingaporeAddress({ formatted_address }) {
   return formatted_address.search("Singapore") !== -1
+}
+
+export function getFullUrl(path) {
+  return URL_SERVER + path
 }

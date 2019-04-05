@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 
 import Map from "./Map";
 import Crisis from "./Crisis";
-import CrisisStatistics from './CrisisStatistics'
-import CrisisList from './CrisisList'
 
 export class CrisisMap extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
+    size: PropTypes.object.isRequired,
+    defaultZoom: PropTypes.number,
   };
+
+  defaultProps = {
+    defaultZoom: 11
+  }
 
   renderCrisis() {
     return this.props.data.map(
@@ -18,10 +22,11 @@ export class CrisisMap extends Component {
   }
 
   render() {
+    const MapWithSize = Map(this.props.size, this.props.defaultZoom)
     return this.props.data.length
       ? (
         <div className="map-crisis-map">
-            <Map> { this.renderCrisis() } </Map>
+            <MapWithSize> { this.renderCrisis() } </MapWithSize>
         </div>
       )
       : (
