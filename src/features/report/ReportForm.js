@@ -36,10 +36,15 @@ export class ReportForm extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.report.actionPostReportFormDataPending
     && !this.isActionPostReportFormDataPending) {
-      this.hideModal()
+      let stateUpdate = { modalVisible: false }
       if (!this.isActionPostReportFormDataError) {
+        stateUpdate = { 
+          ...stateUpdate, 
+          location: undefined
+        }
         this.props.form.resetFields()
       }
+      this.setState(stateUpdate)
     }
   }
 
