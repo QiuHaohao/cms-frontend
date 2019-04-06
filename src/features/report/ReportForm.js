@@ -31,20 +31,21 @@ export class ReportForm extends Component {
   state = {
     modalVisible: false,
     formData: null,
+    isLookingUpPostalCode: false,
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.report.actionPostReportFormDataPending
     && !this.isActionPostReportFormDataPending) {
-      let stateUpdate = { modalVisible: false }
+      let stateUpdate = {}
       if (!this.isActionPostReportFormDataError) {
         stateUpdate = { 
-          ...stateUpdate, 
+          modalVisible: false,
           location: undefined
         }
         this.props.form.resetFields()
       }
-      this.setState(stateUpdate)
+      this.setState({ ...this.state, ...stateUpdate})
     }
   }
 
@@ -54,6 +55,14 @@ export class ReportForm extends Component {
 
   get isActionPostReportFormDataError() {
     return Boolean(this.props.report.actionPostReportFormDataError);
+  }
+
+  get postalCodeInputExtra() {
+    return this.state.isLookingUpPostalCode
+      ? "Looking up location..."
+      : this.state.location 
+        ? `Lat: ${this.state.location.Latitude}   Lng: ${this.state.location.Longitude}`
+        : null
   }
 
   hideModal() {
@@ -93,6 +102,7 @@ export class ReportForm extends Component {
     const postalCodeRegex = /^\d{6}$/
     this.setLocation(undefined)
     if (value && value.match(postalCodeRegex)) {
+      this.setState({ ...this.state, isLookingUpPostalCode: true })
       postalCodeToCoordinates(value).then(
         location => { 
           if (location) {
@@ -102,6 +112,7 @@ export class ReportForm extends Component {
           else {
             callback("Address not found!")
           }
+          this.setState({ ...this.state, isLookingUpPostalCode: false })
         })
     }
     else if (value) {
@@ -214,8 +225,7 @@ export class ReportForm extends Component {
                 "Singapore postal codes are 6 digits long (e.g. 639928)."
               )
             }
-            extra={this.state.location 
-              && `Lat: ${this.state.location.Latitude}   Lng: ${this.state.location.Longitude}`}
+            extra={this.postalCodeInputExtra}
           >
             {getFieldDecorator('PostalCode', {
               rules: [{
