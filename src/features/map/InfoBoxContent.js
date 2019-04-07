@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
+import { Card, Button } from 'antd';
 
 export default class InfoBoxContent extends Component {
   static propTypes = {
@@ -12,6 +12,10 @@ export default class InfoBoxContent extends Component {
   render() {
     return (
       <div className="map-info-box-content">
+        <Button.Group>
+          <Button type="primary" icon="check">Resolve</Button>
+          <Button type="primary" icon="delete">Delete</Button>
+        </Button.Group>
         <Card title={this.props.type} bordered={false}>
           <p>{this.props.message}</p>
         </Card>
