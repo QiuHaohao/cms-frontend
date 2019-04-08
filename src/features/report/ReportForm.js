@@ -260,7 +260,7 @@ export class ReportForm extends Component {
             key="Description"
             label="Description"
           >
-            {getFieldDecorator('Message', {
+            {getFieldDecorator('message_content', {
               rules: [{
                 required: true, message: 'Please input the incident description!',
               }],

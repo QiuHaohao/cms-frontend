@@ -21,7 +21,7 @@ export default class ReportConfirmModal extends Component {
     "Mobile",
     "PostalCode",
     "Type",
-    "Message"
+    "message_content"
   ]
 
   rowLabels = {
@@ -29,7 +29,7 @@ export default class ReportConfirmModal extends Component {
     "Mobile": "Mobile",
     "PostalCode": "Postal Code",
     "Type": "Incident Type",
-    "Message": "Description"
+    "message_content": "Description"
   }
 
   render() {

@@ -21,7 +21,7 @@ export default class CrisisList extends Component {
                 <List.Item>
                   <List.Item.Meta
                     title={item.Type}
-                    description={item.Message}
+                    description={item.message_content}
                   />
                 </List.Item>
               )}
