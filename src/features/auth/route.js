@@ -2,13 +2,13 @@
 // Learn more from: http://rekit.js.org/docs/routing.html
 
 import {
-  DefaultPage,
+  PageAuth,
 } from './';
 
 export default {
   path: 'auth',
   name: 'Auth',
   childRoutes: [
-    { path: 'default-page', name: 'Default page', component: DefaultPage, isIndex: true },
+    { path: 'page-auth', name: 'Page auth', component: PageAuth, isIndex: true },
   ],
 };

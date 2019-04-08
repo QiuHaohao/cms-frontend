@@ -41,7 +41,7 @@ export default class CrisisStatistics extends Component {
               {_.map(
                 this.numCrisisByType,
                 (value, key) => (
-                  <Col span={12} style={{maxWidth:"300px"}}>
+                  <Col span={12} style={{maxWidth:"180px"}}>
                     <Statistic key={key} title={key} value={value} />
                   </Col>
                 )

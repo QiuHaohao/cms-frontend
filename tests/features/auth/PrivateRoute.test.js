@@ -1,19 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { DefaultPage } from '../../../src/features/auth/DefaultPage';
+import { PrivateRoute } from '../../../src/features/auth/PrivateRoute';
 
-describe('auth/DefaultPage', () => {
+describe('auth/PrivateRoute', () => {
   it('renders node with correct class name', () => {
     const props = {
-      login: {},
+      auth: {},
       actions: {},
     };
     const renderedComponent = shallow(
-      <DefaultPage {...props} />
+      <PrivateRoute {...props} />
     );
 
     expect(
-      renderedComponent.find('.auth-default-page').length
+      renderedComponent.find('.auth-private-route').length
     ).toBe(1);
   });
 });

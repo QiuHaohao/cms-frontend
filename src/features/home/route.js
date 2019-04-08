@@ -21,5 +21,10 @@ export default {
       component: DefaultPage,
       isIndex: false,
     },
+    { path: 'auth',
+      name: 'Login',
+      component: DefaultPage,
+      isIndex: false,
+    },
   ],
 };

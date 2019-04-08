@@ -4,7 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
-export class DefaultPage extends Component {
+import AuthForm from './AuthForm'
+
+export class PageAuth extends Component {
   static propTypes = {
     login: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -12,8 +14,9 @@ export class DefaultPage extends Component {
 
   render() {
     return (
-      <div className="auth-default-page">
-        Page Content: login/DefaultPage
+      <div className="auth-page-auth">
+        <div className="auth-page-auth-title">Login</div>
+        <AuthForm redirect={() => {this.props.history.push("/")}}/>
       </div>
     );
   }
@@ -36,4 +39,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DefaultPage);
+)(PageAuth);

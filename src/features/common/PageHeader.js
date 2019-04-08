@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { Menu } from 'antd';
 
+import AuthStatusIndicator from '../auth/AuthStatusIndicator'
+
 import {
   withRouter
 } from 'react-router-dom'
@@ -19,7 +21,7 @@ class PageHeader extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div className="common-page-header">
         <Menu
           theme="dark"
           mode="horizontal"
@@ -28,7 +30,8 @@ class PageHeader extends Component {
           <Menu.Item key="1" onClick={this.getOnClickForTab('/crisis-map')}>Incidents Monitor</Menu.Item>
           <Menu.Item key="2" onClick={this.getOnClickForTab('/report-crisis')}>Report Incident</Menu.Item>
         </Menu>
-      </React.Fragment>
+        <AuthStatusIndicator />
+      </div>
     );
   }
 }

@@ -6,12 +6,17 @@ import * as actions from './redux/actions';
 
 import { PageCrisisMap } from '../map'
 import { PageReportCrisis } from '../report'
+import { PageAuth } from '../auth'
 import { PageHeader } from '../common'
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { isLoggedIn } from '../auth/redux/selectors'
+
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 import { Layout } from 'antd';
 const { Header, Content } = Layout;
+
+
 
 export class DefaultPage extends Component {
   static propTypes = {
@@ -19,14 +24,36 @@ export class DefaultPage extends Component {
     actions: PropTypes.object.isRequired,
   };
 
-  get content() {
+  PrivateRoute({ component: Component, ...rest }) {
     return (
-      <React.Fragment>
-        <Route exact path="/" component={PageCrisisMap} />
-        <Route exact path="/crisis-map" component={PageCrisisMap} />
-        <Route exact path="/report-crisis" component={PageReportCrisis} />
-      </React.Fragment>
-    )
+      <Route
+        {...rest}
+        render={props =>
+          this.props.loggedIn ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/auth",
+                state: { from: props.location }
+              }}
+            />
+          )
+        }
+      />
+    );
+  }
+
+  get content() {
+    const PrivateRoute = this.PrivateRoute.bind(this)
+      return (
+        <React.Fragment>
+          <PrivateRoute exact path="/" component={PageCrisisMap} />
+          <PrivateRoute exact path="/crisis-map" component={PageCrisisMap} />
+          <PrivateRoute exact path="/report-crisis" component={PageReportCrisis} />
+          <Route exact path="/auth" component={PageAuth} />
+        </React.Fragment>
+      )
   }
 
   render() {
@@ -51,6 +78,7 @@ export class DefaultPage extends Component {
 function mapStateToProps(state) {
   return {
     home: state.home,
+    loggedIn: isLoggedIn(state)
   };
 }
 
