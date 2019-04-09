@@ -6,8 +6,8 @@
 
 // NOTE: initialState constant is necessary so that Rekit could auto add initial state when creating async actions.
 const initialState = {
-  login: false,
-  username: undefined
+  login: localStorage.getItem("loggedIn") === "true",
+  username: localStorage.getItem("username")
 };
 
 export default initialState;

@@ -6,16 +6,21 @@ import {
   AUTH_ACTION_LOGIN,
 } from './constants';
 
-export function actionLogin(username) {
+export function actionLogin(username, remember) {
   return {
     type: AUTH_ACTION_LOGIN,
-    username
+    username,
+    remember
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
     case AUTH_ACTION_LOGIN:
+      if (action.remember) {
+        localStorage.setItem("loggedIn", true)
+        localStorage.setItem("username", action.username)
+      }
       return {
         ...state,
         login: true,

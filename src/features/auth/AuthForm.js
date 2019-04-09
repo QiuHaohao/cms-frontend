@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
 import {
-  Form, Icon, Input, Button, message
+  Form, Icon, Input, Button, Checkbox, message
 } from 'antd';
 
 export class AuthForm extends Component {
@@ -18,9 +18,9 @@ export class AuthForm extends Component {
     "admin": "admin"
   }
 
-  login({username, password}) {
+  login({username, password, remember}) {
     if (this.isValidCredential(username, password)) {
-      this.props.actions.actionLogin(username)
+      this.props.actions.actionLogin(username, remember)
       this.props.redirect()
     }
     else {
@@ -38,6 +38,7 @@ export class AuthForm extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        console.log(values)
         this.login(values)
       }
     });
@@ -63,6 +64,12 @@ export class AuthForm extends Component {
             )}
           </Form.Item>
           <Form.Item>
+            {getFieldDecorator('remember', {
+              valuePropName: 'checked',
+              initialValue: true,
+            })(
+              <Checkbox>Remember me</Checkbox>
+            )}
             <Button type="primary" htmlType="submit" className="login-form-button">
               Log in
             </Button>

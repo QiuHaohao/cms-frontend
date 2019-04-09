@@ -15,6 +15,8 @@ export function actionLogout() {
 export function reducer(state, action) {
   switch (action.type) {
     case AUTH_ACTION_LOGOUT:
+      localStorage.setItem("loggedIn", false)
+      localStorage.setItem("username", undefined)
       return {
         ...state,
         login: false,
