@@ -29,14 +29,15 @@ export class CrisisMap extends Component {
   }
 
   renderCrisis() {
-    return this.props.data.map(
+    return _.map(
+      this.props.data,
       (datum, index) => <Crisis key={index} preview={this.props.preview} {...datum}/>
     )
   }
 
   render() {
     const MapWithSize = Map(this.props.size, this.props.defaultZoom)
-    return this.props.data.length
+    return Object.keys(this.props.data).length
       ? (
         <div className="map-crisis-map">
             <MapWithSize > { this.renderCrisis() } </MapWithSize>

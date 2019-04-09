@@ -6,6 +6,8 @@ import * as actions from './redux/actions';
 
 import { Button } from 'antd';
 
+import { getIdBeingResolved, getIdBeingDeleted } from './redux/selectors'
+
 export class ButtonResolve extends Component {
   static propTypes = {
     id: PropTypes.number.isRequired,
@@ -17,10 +19,31 @@ export class ButtonResolve extends Component {
     this.props.actions.actionResolveIncident(this.props.id)
   }
 
+  get isDeleting() {
+    return this.props.idBeingDeleted && this.props.idBeingDeleted === this.props.id
+  }
+
+  get isResolving() {
+    return this.props.idBeingResolved && this.props.idBeingResolved === this.props.id
+  }
+
+  get isResolved() {
+    return this.props.map.data[this.props.id].resolved_status === "resolve"
+  }
+
+  get disabled() {
+    return this.props.map.data[this.props.id].resolved_status !== "active"
+      || this.isResolving
+  }
+
   render() {
     return (
-      <Button type="primary" onClick={() => this.resolve()}>
-          Resolve
+      <Button 
+        type="primary" 
+        onClick={() => this.resolve()}
+        loading={this.isResolving}
+        disabled={this.disabled}>
+        { this.isResolved ? "Resolved" : "Resolve"}
       </Button>
     );
   }
@@ -30,6 +53,8 @@ export class ButtonResolve extends Component {
 function mapStateToProps(state) {
   return {
     map: state.map,
+   idBeingDeleted: getIdBeingDeleted(state),
+    idBeingResolved: getIdBeingResolved(state),
   };
 }
 

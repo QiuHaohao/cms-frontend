@@ -3,7 +3,10 @@ import {
   MAP_ACTION_RESOLVE_INCIDENT_SUCCESS,
   MAP_ACTION_RESOLVE_INCIDENT_FAILURE,
   MAP_ACTION_RESOLVE_INCIDENT_DISMISS_ERROR,
+  MAP_ACTION_FETCH_DATA_BEGIN,
 } from './constants';
+
+import { setAsResolved } from './modifiers'
 
 import { getFullUrl } from '../../../utils'
 
@@ -33,6 +36,10 @@ export function actionResolveIncident(id) {
           dispatch({
             type: MAP_ACTION_RESOLVE_INCIDENT_SUCCESS,
             data: res,
+            id
+          });
+          dispatch({
+            type: MAP_ACTION_FETCH_DATA_BEGIN,
           });
           message.success("Incident successfully resolved!")
           resolve(res);
@@ -42,7 +49,9 @@ export function actionResolveIncident(id) {
           dispatch({
             type: MAP_ACTION_RESOLVE_INCIDENT_FAILURE,
             data: { error: err },
+            id
           });
+          message.error("There was an error resolving the incident!")
           reject(err);
         },
       );
@@ -68,14 +77,16 @@ export function reducer(state, action) {
         ...state,
         actionResolveIncidentPending: true,
         actionResolveIncidentError: null,
+        idBeingResolved: action.id
       };
 
     case MAP_ACTION_RESOLVE_INCIDENT_SUCCESS:
       // The request is success
       return {
-        ...state,
+        ...setAsResolved(state, action.id),
         actionResolveIncidentPending: false,
         actionResolveIncidentError: null,
+        idBeingResolved: null
       };
 
     case MAP_ACTION_RESOLVE_INCIDENT_FAILURE:
@@ -84,6 +95,7 @@ export function reducer(state, action) {
         ...state,
         actionResolveIncidentPending: false,
         actionResolveIncidentError: action.data.error,
+        idBeingResolved: null
       };
 
     case MAP_ACTION_RESOLVE_INCIDENT_DISMISS_ERROR:

@@ -3,12 +3,19 @@ import PropTypes from 'prop-types';
 
 import { Table } from 'antd';
 
+import ButtonDelete from './ButtonDelete'
+import ButtonResolve from './ButtonResolve'
+
 const _ = require('lodash')
 
 export default class CrisisList extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
   };
+
+  get numTotalCrisis() {
+    return Object.keys(this.props.data).length
+  }
   
   get dataWithKey() {
     return _.map(
@@ -25,13 +32,12 @@ export default class CrisisList extends Component {
   get dataWithKeyReversedID() {
     return _.reverse(_.sortBy(
       this.dataWithKey,
-      'level_0'
+      'id'
     ))
   }
-
   columns = [ {
     title: 'ID',
-    dataIndex: 'level_0',
+    dataIndex: 'id',
     key: 'id',
   }, {
     title: 'Time',
@@ -45,10 +51,21 @@ export default class CrisisList extends Component {
     title: 'Description',
     dataIndex: 'message_content',
     key: 'message',
+  },
+  {
+    title: 'Actions',
+    key: 'actions',
+    render: (text, record) => {
+      return (
+      <div className="map-crisis-list-actions">
+        <ButtonResolve id={record.id} />
+        <ButtonDelete id={record.id} />
+      </div>
+    )}
   }];
 
   render() {
-    return this.props.data.length !== 0
+    return this.numTotalCrisis !== 0
       ? <div className="map-crisis-list">
           <div className="map-crisis-list-header">
             List of Incidents

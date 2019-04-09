@@ -3,8 +3,10 @@ import {
   MAP_ACTION_DELETE_INCIDENT_SUCCESS,
   MAP_ACTION_DELETE_INCIDENT_FAILURE,
   MAP_ACTION_DELETE_INCIDENT_DISMISS_ERROR,
+  MAP_ACTION_FETCH_DATA_BEGIN,
 } from './constants';
 
+import { setAsDeleted } from './modifiers'
 
 import { getFullUrl } from '../../../utils'
 
@@ -15,6 +17,7 @@ export function actionDeleteIncident(id) {
   return (dispatch) => { 
     dispatch({
       type: MAP_ACTION_DELETE_INCIDENT_BEGIN,
+      id
     });
 
     const promise = new Promise((resolve, reject) => {
@@ -33,6 +36,10 @@ export function actionDeleteIncident(id) {
           dispatch({
             type: MAP_ACTION_DELETE_INCIDENT_SUCCESS,
             data: res,
+            id
+          });
+          dispatch({
+            type: MAP_ACTION_FETCH_DATA_BEGIN,
           });
           message.success("Incident successfully deleted!")
           resolve(res);
@@ -42,7 +49,9 @@ export function actionDeleteIncident(id) {
           dispatch({
             type: MAP_ACTION_DELETE_INCIDENT_FAILURE,
             data: { error: err },
+            id
           });
+          message.error("There was an error deleting the incident!")
           reject(err);
         },
       );
@@ -68,14 +77,16 @@ export function reducer(state, action) {
         ...state,
         actionDeleteIncidentPending: true,
         actionDeleteIncidentError: null,
+        idBeingDeleted: action.id
       };
 
     case MAP_ACTION_DELETE_INCIDENT_SUCCESS:
       // The request is success
       return {
-        ...state,
+        ...setAsDeleted(state, action.id),
         actionDeleteIncidentPending: false,
         actionDeleteIncidentError: null,
+        idBeingDeleted: null
       };
 
     case MAP_ACTION_DELETE_INCIDENT_FAILURE:

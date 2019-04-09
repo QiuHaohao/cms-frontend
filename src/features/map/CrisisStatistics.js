@@ -11,7 +11,7 @@ export default class CrisisStatistics extends Component {
   };
 
   get numTotalCrisis() {
-    return this.props.data.length
+    return Object.keys(this.props.data).length
   }
 
   get numCrisisByType() {
@@ -28,7 +28,7 @@ export default class CrisisStatistics extends Component {
   }
 
   render() {
-    return this.props.data.length !== 0
+    return this.numTotalCrisis
       ? <div className="map-crisis-statistics">
           <Col>
             <Row gutter={16}>
