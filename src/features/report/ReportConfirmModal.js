@@ -17,16 +17,16 @@ export default class ReportConfirmModal extends Component {
   };
 
   rows = [
-    "Name",
-    "Mobile",
+    "person",
+    "phone",
     "PostalCode",
     "Type",
     "message_content"
   ]
 
   rowLabels = {
-    "Name": "Name",
-    "Mobile": "Mobile",
+    "person": "Name",
+    "phone": "Mobile",
     "PostalCode": "Postal Code",
     "Type": "Incident Type",
     "message_content": "Description"
@@ -65,7 +65,12 @@ export default class ReportConfirmModal extends Component {
                   }
                 </Col>
               </div>
-              <CrisisMap data={[this.props.formData]} size={{width:"400px", height: "300px"}} defaultZoom={10}/>
+              <CrisisMap 
+                data={[this.props.formData]} 
+                size={{width:"400px", height: "300px"}} 
+                defaultZoom={10}
+                preview
+                />
             </div>
           : null
         }

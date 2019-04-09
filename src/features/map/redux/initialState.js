@@ -9,6 +9,10 @@ const initialState = {
   data: [],
   actionFetchDataPending: false,
   actionFetchDataError: null,
+  actionResolveIncidentPending: false,
+  actionResolveIncidentError: null,
+  actionDeleteIncidentPending: false,
+  actionDeleteIncidentError: null,
 };
 
 export default initialState;

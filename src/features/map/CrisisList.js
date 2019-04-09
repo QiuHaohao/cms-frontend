@@ -1,12 +1,51 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { List } from 'antd';
+import { Table } from 'antd';
+
+const _ = require('lodash')
 
 export default class CrisisList extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
   };
+  
+  get dataWithKey() {
+    return _.map(
+      this.props.data,
+      (item, index) => {
+          return {
+          ...item,
+          key: index
+        }
+      }
+    )
+  }
+
+  get dataWithKeyReversedID() {
+    return _.reverse(_.sortBy(
+      this.dataWithKey,
+      'level_0'
+    ))
+  }
+
+  columns = [ {
+    title: 'ID',
+    dataIndex: 'level_0',
+    key: 'id',
+  }, {
+    title: 'Time',
+    dataIndex: 'start_time',
+    key: 'time',
+  },{
+    title: 'Incident Type',
+    dataIndex: 'Type',
+    key: 'type',
+  },{
+    title: 'Description',
+    dataIndex: 'message_content',
+    key: 'message',
+  }];
 
   render() {
     return this.props.data.length !== 0
@@ -14,18 +53,7 @@ export default class CrisisList extends Component {
           <div className="map-crisis-list-header">
             List of Incidents
           </div>
-            <List
-              itemLayout="horizontal"
-              dataSource={this.props.data}
-              renderItem={item => (
-                <List.Item>
-                  <List.Item.Meta
-                    title={item.Type}
-                    description={item.message_content}
-                  />
-                </List.Item>
-              )}
-            />
+            <Table dataSource={this.dataWithKeyReversedID} columns={this.columns} />
         </div>
       : null;
   }

@@ -12,7 +12,7 @@ import { message } from 'antd';
 
 
 export function actionPostReportFormData(formData) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return (dispatch) => { 
     dispatch({
       type: REPORT_ACTION_POST_REPORT_FORM_DATA_BEGIN,
       formData

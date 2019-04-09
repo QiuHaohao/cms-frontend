@@ -4,37 +4,33 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
-import AuthForm from './AuthForm'
-
-import { Redirect } from "react-router-dom";
-
-import { isLoggedIn } from '../auth/redux/selectors'
+import { Button } from 'antd';
 
 
-
-export class PageAuth extends Component {
+export class ButtonDelete extends Component {
   static propTypes = {
-    login: PropTypes.object.isRequired,
+    map: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
+  delete() {
+    this.props.actions.actionDeleteIncident(this.props.id)
+  }
+
   render() {
-    return this.props.isLoggedIn
-      ? <Redirect to="/"/> 
-      : (
-        <div className="auth-page-auth">
-          <div className="auth-page-auth-title">Login</div>
-          <AuthForm redirect={() => {this.props.history.push("/")}}/>
-        </div>
-      );
+    return (
+      <Button type="danger" onClick={() => this.delete()}>
+          Delete
+      </Button>
+      
+    );
   }
 }
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    login: state.login,
-    isLoggedIn: isLoggedIn(state)
+    map: state.map,
   };
 }
 
@@ -48,4 +44,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PageAuth);
+)(ButtonDelete);

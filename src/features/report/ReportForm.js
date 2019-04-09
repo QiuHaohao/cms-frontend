@@ -188,7 +188,7 @@ export class ReportForm extends Component {
             key="Name"
             label="Name"
           >
-            {getFieldDecorator('Name', {
+            {getFieldDecorator('person', {
               rules: [{
                 required: true, message: 'Please input the name of the reporter!',
               }, {
@@ -207,7 +207,7 @@ export class ReportForm extends Component {
               )
             }
           >
-            {getFieldDecorator('Mobile', {
+            {getFieldDecorator('phone', {
               rules: [{
                 required: true, message: 'Please input the mobile number of the reporter!',
               }, {

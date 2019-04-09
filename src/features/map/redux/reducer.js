@@ -8,9 +8,13 @@
 
 import initialState from './initialState';
 import { reducer as actionFetchDataReducer } from './actionFetchData';
+import { reducer as actionResolveIncidentReducer } from './actionResolveIncident';
+import { reducer as actionDeleteIncidentReducer } from './actionDeleteIncident';
 
 const reducers = [
   actionFetchDataReducer,
+  actionResolveIncidentReducer,
+  actionDeleteIncidentReducer,
 ];
 
 export default function reducer(state = initialState, action) {

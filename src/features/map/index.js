@@ -5,3 +5,5 @@ export { default as InfoBoxContent } from './InfoBoxContent';
 export { default as PageCrisisMap } from './PageCrisisMap';
 export { default as CrisisStatistics } from './CrisisStatistics';
 export { default as CrisisList } from './CrisisList';
+export { default as ButtonResolve } from './ButtonResolve';
+export { default as ButtonDelete } from './ButtonDelete';

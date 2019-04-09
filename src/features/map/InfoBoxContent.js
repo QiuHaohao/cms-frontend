@@ -1,47 +1,39 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Button } from 'antd';
+import { Card } from 'antd';
+
+import ButtonDelete from './ButtonDelete'
+import ButtonResolve from './ButtonResolve'
 
 export default class InfoBoxContent extends Component {
   static propTypes = {
     message: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
+    preview: PropTypes.bool,
   };
-  
-  get resolveButton() {
-    return (
-      <Button type="primary">
-          Resolve
-      </Button>
-    )
-  }
 
-  get deleteButton() {
-    return (
-      <Button type="danger">
-          Delete
-      </Button>
-    )
+  defaultProps = {
+    preview: false,
   }
 
   get buttons() {
     return (
       <div className="map-info-box-content">
-        {this.resolveButton}
-        {this.deleteButton}
+        <ButtonDelete id={this.props.id}/>
+        <ButtonResolve id={this.props.id}/>
       </div>
     )
   }
 
   render() {
-    console.log(this.props.id)
     return (
       <div className="map-info-box-content">
         <Card title={this.props.type} bordered={false}>
+          { this.props.preview ? null : <p>{'ID: ' + this.props.id}</p> }
           <p>{this.props.message}</p>
         </Card>
-        { this.buttons }
+        { this.props.preview ? null : this.buttons }
       </div>
     );
   }

@@ -11,10 +11,13 @@ export class CrisisMap extends Component {
     data: PropTypes.object.isRequired,
     size: PropTypes.object.isRequired,
     defaultZoom: PropTypes.number,
+    preview: PropTypes.bool,
+
   };
 
   defaultProps = {
-    defaultZoom: 11
+    defaultZoom: 11,
+    preview: false,
   }
   
   shouldComponentUpdate(nextProps, nextState) {
@@ -27,7 +30,7 @@ export class CrisisMap extends Component {
 
   renderCrisis() {
     return this.props.data.map(
-      (datum, index) => <Crisis key={index} {...datum}/>
+      (datum, index) => <Crisis key={index} preview={this.props.preview} {...datum}/>
     )
   }
 
@@ -36,7 +39,7 @@ export class CrisisMap extends Component {
     return this.props.data.length
       ? (
         <div className="map-crisis-map">
-            <MapWithSize> { this.renderCrisis() } </MapWithSize>
+            <MapWithSize > { this.renderCrisis() } </MapWithSize>
         </div>
       )
       : (
