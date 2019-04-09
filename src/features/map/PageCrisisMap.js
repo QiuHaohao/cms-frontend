@@ -20,7 +20,7 @@ export class PageCrisisMap extends Component {
       () => {
         this.props.actions.actionFetchData()
       }
-    , 100000)
+    , 30000)
     this.props.actions.actionFetchData()
   }
 

@@ -38,7 +38,7 @@ const Crisis = compose(
           onCloseClick={props.onToggleOpen}
           options={{ closeBoxURL: ``, enableEventPropagation: true }}>
             <div className="infobox">
-              <InfoBoxContent message={props.message_content} type={props.Type} />
+              <InfoBoxContent message={props.message_content} type={props.Type} id={props.level_0}/>
             </div>
         </InfoBox>
       }

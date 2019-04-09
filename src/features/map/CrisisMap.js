@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Map from "./Map";
 import Crisis from "./Crisis";
 
+const _ = require('lodash')
+
 export class CrisisMap extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
@@ -13,6 +15,14 @@ export class CrisisMap extends Component {
 
   defaultProps = {
     defaultZoom: 11
+  }
+  
+  shouldComponentUpdate(nextProps, nextState) {
+    if (_.isEqual(nextProps.data, this.props.data)) {
+      return false
+    } else {
+      return true
+    }
   }
 
   renderCrisis() {

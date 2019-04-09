@@ -3,6 +3,5 @@ export function isLoggedIn(state) {
 }
 
 export function getUsername(state) {
-  console.log(state.auth)
   return state.auth.username
 }
